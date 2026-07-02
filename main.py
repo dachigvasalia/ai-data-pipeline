@@ -1,3 +1,4 @@
+from src.database import DataBaseManager
 from src.fetcher import NewsFetcher
 from src.data_record import DataRecord
 from src.pipeline import DataPipeline
@@ -21,9 +22,18 @@ def main():
     
     pipeline.run()
     pipeline.summary()
+
+    db = DataBaseManager()
+    db.create_table()
+    db.clear_table()
     
     for record in pipeline.get_clean_records():
-        print(record.to_dict())
+        db.save_record(record)
+    
+    rows = db.get_records()
+    print(f'database contains {len(rows)} articles')
+    for row in rows:
+        print(row)
 
 if __name__ == '__main__':
     main()
