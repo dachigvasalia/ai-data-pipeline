@@ -1,13 +1,13 @@
 import requests
 
 class NewsFetcher:
-    def __init__(self,apikey,volume=10):
-        self.api_key = apikey
+    def __init__(self,apiKey,volume=10):
+        self.apiKey = apiKey
         self.volume = volume
 
     def fetch(self):
         parameters = {
-            'api_key': self.apikey,
+            'apiKey': self.apiKey,
             'category': 'technology',
             'language': 'en',
             'pagesSize': self.volume
