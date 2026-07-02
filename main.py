@@ -8,7 +8,7 @@ load_dotenv()
 
 def main():
 
-    fetcher = NewsFetcher(apiKey=os.dotenv('NEWS_API_KEY'),volume=10)
+    fetcher = NewsFetcher(api_key=os.getenv('NEWS_API_KEY'),volume=10)
     articles = fetcher.fetch()
 
     pipeline = DataPipeline(name='news-pipeline-v1')
@@ -27,3 +27,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

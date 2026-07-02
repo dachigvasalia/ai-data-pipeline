@@ -1,16 +1,16 @@
 import requests
 
 class NewsFetcher:
-    def __init__(self,apiKey,volume=10):
-        self.apiKey = apiKey
+    def __init__(self,api_key,volume=10):
+        self.api_key = api_key
         self.volume = volume
 
     def fetch(self):
         parameters = {
-            'apiKey': self.apiKey,
+            'apiKey': self.api_key,
             'category': 'technology',
             'language': 'en',
-            'pagesSize': self.volume
+            'pageSize': self.volume
         }
         
         #creating hhtp request for newsapi
@@ -25,4 +25,3 @@ class NewsFetcher:
         else:
             print(f'Error: {response.status_code}')
             return []
-
