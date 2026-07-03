@@ -1,3 +1,4 @@
+from src.analytics import Analyzer
 from src.database import DataBaseManager
 from src.fetcher import NewsFetcher
 from src.data_record import DataRecord
@@ -34,6 +35,18 @@ def main():
     print(f'database contains {len(rows)} articles')
     for row in rows:
         print(row)
+    
+    analyzer = Analyzer()
+    print('\n---Articles per source')
+    for row in analyzer.articles_per_source():
+        print(f'{row[0]}: {row[1]} articles')
+    
+    print('\n most recent articles')
+    for row in analyzer.most_recent_articles():
+        print(f'{row[2]} | {row[0]} | {row[1]}')
+    
+    print(f'\n ---toatl articels in database : {analyzer.total_articles()}---')
+
 
 if __name__ == '__main__':
     main()
