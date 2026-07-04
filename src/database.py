@@ -18,7 +18,9 @@ class DataBaseManager:
             raw_text TEXT,
             cleaned_text TEXT,
             timestamp TEXT,
-            is_clean INTEGER                        
+            is_clean INTEGER,
+            sentiment TEXT,
+            topic TEXT                       
         )
                                 
         ''')
@@ -30,12 +32,14 @@ class DataBaseManager:
         self.logger.log('table cleared')
         
     def save_record(self,record):
-        self.connection.execute('''
-        INSERT INTO articles(source,raw_text,cleaned_text,timestamp,is_clean)
-        VALUES(?,?,?,?,?)
-        ''', (record.source,record.raw_text,record.cleaned_text,record.timestamp,record.is_clean))
+        cursor = self.connection.execute('''
+        INSERT INTO articles(source,raw_text,cleaned_text,timestamp,is_clean,sentiment,topic)
+        VALUES(?,?,?,?,?,?,?)
+        ''', (record.source,record.raw_text,record.cleaned_text,record.timestamp,record.is_clean,None,None))
         self.connection.commit()
+        record.id = cursor.lastrowid
         self.logger.log(f'{record}')
+        return record
     
     def get_records(self):
         cursor = self.connection.execute('SELECT * FROM articles')

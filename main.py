@@ -1,3 +1,4 @@
+from src.classifier import Classifier
 from src.analytics import Analyzer
 from src.database import DataBaseManager
 from src.fetcher import NewsFetcher
@@ -10,6 +11,7 @@ load_dotenv()
 
 def main():
 
+    openrouter_api_key= os.getenv('OPENROUTER_API_KEY')
     fetcher = NewsFetcher(api_key=os.getenv('NEWS_API_KEY'),volume=10)
     articles = fetcher.fetch()
 
@@ -31,6 +33,10 @@ def main():
     for record in pipeline.get_clean_records():
         db.save_record(record)
     
+    classifier = Classifier(api_key=openrouter_api_key)
+    for record in pipeline.get_clean_records():
+        classifier.classify(record)
+    
     rows = db.get_records()
     print(f'database contains {len(rows)} articles')
     for row in rows:
@@ -50,4 +56,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

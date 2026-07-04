@@ -6,6 +6,9 @@ class DataRecord:
         self.timestamp = datetime.now().strftime('%Y-%m-%d %H-%M-%S')
         self.is_clean = False
         self.cleaned_text = None
+        self.sentiment = None
+        self.topic = None
+        self.id = None
 
     def clean(self):
         self.cleaned_text = self.raw_text.strip().lower()
