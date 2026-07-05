@@ -43,8 +43,8 @@ pip install -r requirements.txt
 3.**Set up enviroment variables**
 
 Create `.env` variable in file of root folder with following:
-NEWS_API_KEY=442202008bc8434eb79a3f3fd138bb5e
-OPENROUTER_API_KEY=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
+NEWS_API_KEY=your_api_key_here
+OPENROUTER_API_KEY=your_api_key_here
 
 - Get your free NewsAPI key at: https://newsapi.org
 - Get your free OpenRouter key at: https://openrouter.ai
