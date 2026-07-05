@@ -1,15 +1,24 @@
-from src.database import DataBaseManager
 from src.logger import Logger
 import sqlite3
 
 class Analyzer:
+
+    '''extracts business insights from database with SQL queries'''
+
     def __init__(self,db_path='data/news.db'):
+
+        '''initializes Analyzer's object with db_path parameter that is already set.
+        creates object of Logger's class and connection to database file.makes a log'''
+
         self.db_path = db_path
         self.logger = Logger()
         self.connection = sqlite3.connect(db_path)
         self.logger.log(f'analytics connected to {self.db_path} database')  
     
     def articles_per_source(self):
+
+        '''count the articles of each source,adds an appropirate log and returns rows of SQL table'''
+
         cursor = self.connection.execute('''
         SELECT source,COUNT(*) as article_count
         From articles
@@ -21,6 +30,9 @@ class Analyzer:
         return rows
     
     def most_recent_articles(self):
+
+        '''returns 5 most recent articles(returns 5 tuples)'''
+
         cursor = self.connection.execute('''
         SELECT source,raw_text,timestamp
         FROM articles
@@ -32,6 +44,9 @@ class Analyzer:
         return rows
     
     def total_articles(self):
+
+        '''returns total number of articles and adds log'''
+
         cursor = self.connection.execute('SELECT COUNT(*) FROM articles')
         row = cursor.fetchone()
         count = row[0]

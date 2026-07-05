@@ -6,7 +6,14 @@ import re
 import time
 
 class Classifier:
+
+    '''sends cleaned text to LLM API'S,gets back sentiment and topic labels,stores them in database'''
+
     def __init__(self,api_key,db_path='data/news.db'):
+
+        '''initializes Classifier's object with api_key and db_path parameters,db_path is already set.
+        then creates Logger's object,creates connection to database file and makes a log'''
+
         self.api_key = api_key
         self.db_path = db_path
         self.logger = Logger()
@@ -14,6 +21,11 @@ class Classifier:
         self.logger.log('Classifier is ready')
     
     def classify(self,record):
+
+        '''Classifies a DataRecord's sentiment and topic using an LLM API.
+        Updates the record and database row with the results.
+        Falls back to default values if the API fails or returns invalid JSON.'''
+
         time.sleep(5)
         client = OpenAI(
         api_key=self.api_key,
@@ -36,7 +48,6 @@ class Classifier:
         else:
             result = response.choices[0].message.content
 
-        print(f"AI response: {result}")
         
         try:
             match = re.search(r'\{[^{}]*"sentiment"[^{}]*"topic"[^{}]*\}', result, re.DOTALL)

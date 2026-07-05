@@ -7,7 +7,12 @@ from src.pipeline import DataPipeline
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+# Entry point for the AI-powered news data pipeline.
+# Orchestrates fetching, cleaning, storing, classifying and analyzing news articles.
+
+
+
+load_dotenv() #looks for .env file where api keys are stored
 
 def main():
 
